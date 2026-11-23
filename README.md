@@ -1,95 +1,56 @@
-# SUSHMITA — THE SERIES
+# Vishnu Prasath V — The Series
 
-A cinematic, streaming-inspired portfolio for **Sushmita Dasari**: Full-Stack Developer and B.Tech AI & ML student.
-Every section is an episode, every project is an Original, and the whole site plays like a series.
+> **Data Scientist / IT Undergraduate**  
+> A cinematic, streaming-inspired personal portfolio showcasing database architectures, data modeling, backend automation, and software engineering originals.
 
-> A personal portfolio with a fictional streaming-platform look. It is not affiliated with Netflix or any other streaming service and uses none of their logos.
+🌐 **Live Website**: [https://vishnuprasathviswanathan2107-art.github.io/Portfolio_series/](https://vishnuprasathviswanathan2107-art.github.io/Portfolio_series/)
 
-## Run it locally
+---
 
-Requires **Node.js 18+**.
+## 🎬 Featured Originals (Projects)
 
-```bash
-npm install
-npm run dev
-```
+1. **Let's Track Coding Habit Tracker** (*Data Modeling & Automation Platform*)
+   - Architected robust relational data models with custom objects and junction relationships to track user metrics, coding challenges, and historical performance.
+   - Formulated complex SOQL aggregation queries for streak computation and dynamic leaderboards.
+   - Engineered an automated data-processing pipeline using Scheduled Apex for rotation, data aggregation, and email engagements.
+   - Built dashboards utilizing REST APIs and wire services.
+   - [Repository](https://github.com/vishnuprasathviswanathan2107-art/Let-sTrack)
 
-Open the URL Vite prints (usually http://localhost:5173).
+2. **Campus360 - Faculty Management System** (*Database Integration & Logic Development*)
+   - Developed backend data workflows and administrative portals for academic and faculty data.
+   - Implemented optimized, data-driven components deeply integrated with backend MVC controllers.
+   - Ensured strict data integrity and fast retrieval speeds via optimized SQL/SOQL queries.
+   - [Repository](https://github.com/vishnuprasathviswanathan2107-art/Campus360)
 
-Production build:
+---
 
-```bash
-npm run build
-npm run preview
-```
+## 🛠️ Technical Skills
 
-The static site is written to `dist/` and can be deployed as-is to Vercel, Netlify, GitHub Pages or any static host.
+- **Databases & Query**: SQL, RDBMS PostgreSQL, MySQL, SOQL (Salesforce Object Query Language)
+- **Programming**: Java, Apex, Linux
+- **Core Competencies**: Data Structures & Algorithms, Data Modeling, Relational Databases, REST API Development, Problem Solving, Prompt Engineering
+- **Tools & Frameworks**: Git, GitHub, Docker, VS Code, Eclipse, Figma
 
-## Updating the content
+---
 
-**All content lives in one file: [`src/data/portfolio.ts`](src/data/portfolio.ts).** It was generated from the resume, and every component reads from it.
+## 🏆 Achievements & Certifications
 
-| To change… | Edit |
-| --- | --- |
-| Name, intro, email, LinkedIn, GitHub | `profile` |
-| A project, or a new one | `projects` (add an object; it appears in Originals, the overlay, the resume sheet and the counts) |
-| Achievements / certifications | `achievements`, `certifications` |
-| Skills and their "where it's used" notes | `skillCategories`, `skillEvidence` |
-| Seasons and episodes (My Journey) | `seasons` |
-| Top 10 row | `topPicks` |
-| ▶ Play Intro highlight reel | `introSlides` |
-| Profile order (Recruiter / Developer / Creative) | `viewerProfiles` |
-| Opening studio card text | `profile.originalLabel` |
+- **Algorithmic Problem Solving**: 444k+ Global Ranking on LeetCode | 1400+ Rating on CodeChef
+- **Salesforce Certified Platform Developer I**: Scored 91% (Feb 2026)
+- **RDBMS PostgreSQL (Score: 90%)**: Certified by Spoken Tutorial, IIT Bombay (Aug 2024)
+- **Java (Score: 85%)**: Certified by Spoken Tutorial, IIT Bombay (March 2025)
 
-**Resume:** replace `public/assets/Sushmita_Dasari_Resume.pdf`.
+---
 
-**Photo:** replace `pic1.jpeg` (high-res photo) and `pic.png` (background-removed cutout with the same framing), then run:
+## 🎓 Education
 
-```bash
-npm run images
-```
+- **B.Tech in Information Technology** (CGPA: 7.43) — Karpagam College of Engineering | Sept 2023 - 2027
+- **Higher Secondary Education** (Percentage: 72%) — Sri Lakshmi Vidhyalaya Matriculation Higher Secondary School | 2022 - 2023
 
-This rebuilds the responsive WebP portraits and the social share image in `public/assets/`.
+---
 
-## What's inside
+## 📬 Contact & Links
 
-```
-src/
-  data/portfolio.ts        ← single source of truth (from the resume)
-  App.tsx                  ← stages: opening → profile select → home; overlays
-  components/
-    OpeningSequence        ← black → studio card → SUSHMITA → THE SERIES → portrait → ▶ PLAY
-    ProfileSelector        ← "Who's watching?" (changes section order only)
-    Navbar                 ← hide-on-scroll nav, profile switcher, mobile menu
-    Hero                   ← billboard: parallax portrait, particles, light streaks, floating chips
-    PlayIntro              ← ▶ Play Intro: zoom into portrait → highlight reel (pause, ← →, tap zones)
-    ContinueWatching       ← cards with real "watched" progress bars
-    About                  ← The Pilot
-    Seasons / EpisodeCard  ← My Journey as seasons and episodes
-    Originals / ProjectCard← pinned horizontal sequence on desktop, swipe rail on touch
-    ProjectModal           ← full-screen project overlay with a shared-element transition
-    TopPicks               ← Top 10-style row
-    Skills                 ← skill genres; each card shows where the skill appears
-    Achievements           ← award-poster cards + certification rail (links to credentials)
-    ResumeViewer/ResumeModal ← designed resume sheet, PDF viewer, download
-    FinalCTA               ← TO BE CONTINUED… + contact links
-    CustomCursor, fx.tsx   ← cursor states, magnetic buttons, 3D tilt, text reveals, particles
-  hooks/                   ← Lenis smooth scroll + scroll lock, media queries, watch progress
-scripts/build-images.mjs   ← portrait/share-image pipeline (sharp)
-```
-
-**Stack:** React 18, TypeScript, Vite 6, Tailwind CSS 4, Framer Motion 11, Lenis.
-
-## Accessibility and performance
-
-- `prefers-reduced-motion` is respected: smooth scroll, the custom cursor, tilt, particles, grain and the pinned horizontal scroll turn off, and the opening jumps straight to its final frame.
-- Hover effects only run on devices with a precise pointer. Touch devices get tap interactions and native swipe rails.
-- The custom cursor appears only with a mouse or trackpad.
-- Overlays close with Esc, and the highlight reel supports Space and the ← → keys.
-- Portraits are responsive WebP files (25–90 KB). Overlays are code-split, and particles pause when they're off screen.
-
-## Keyboard shortcuts
-
-- **Opening:** Enter or Esc skips it.
-- **Play Intro:** Space pauses, ← and → change slides, Esc closes.
-- **Project and resume overlays:** Esc closes.
+- **Email**: [vishnuprasathviswanathan2107@gmail.com](mailto:vishnuprasathviswanathan2107@gmail.com)
+- **LinkedIn**: [Vishnu-Prasath-V](https://www.linkedin.com/in/Vishnu-Prasath-V/)
+- **GitHub**: [vishnuprasathviswanathan2107-art](https://github.com/vishnuprasathviswanathan2107-art)
