@@ -3,7 +3,7 @@ import { motion, useMotionValue, useScroll, useSpring, useTransform } from 'fram
 import { certifications, education, profile, projects, type ProfileId } from '../data/portfolio';
 import { useFinePointer } from '../hooks/useMedia';
 import { useSmoothScroll } from '../hooks/smoothScroll';
-import { EASE, Magnetic, Particles } from './fx';
+import { EASE, Equalizer, LetterReveal, Magnetic, Particles } from './fx';
 import { SeriesMark } from './Poster';
 
 const container = { hidden: {}, show: { transition: { staggerChildren: 0.09, delayChildren: 0.25 } } };
@@ -84,8 +84,8 @@ export default function Hero({ onPlay, onResume, profileId }: { onPlay: () => vo
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, ease: EASE, delay: 0.1 }}
         >
-          {/* rim light ring */}
-          <div aria-hidden className="absolute bottom-[8%] left-1/2 h-[78%] w-[78%] -translate-x-1/2 rounded-full border border-crimson-2/20 shadow-[0_0_120px_rgba(229,19,43,0.35),inset_0_0_80px_rgba(229,19,43,0.18)]" />
+          {/* rim light ring with atmospheric radar pulse */}
+          <div aria-hidden className="radar-ring absolute bottom-[8%] left-1/2 h-[78%] w-[78%] -translate-x-1/2 rounded-full border border-crimson-2/25 shadow-[0_0_120px_rgba(229,19,43,0.35),inset_0_0_80px_rgba(229,19,43,0.18)]" />
           <img
             src={profile.portrait.src}
             srcSet={profile.portrait.srcSet}
@@ -116,11 +116,15 @@ export default function Hero({ onPlay, onResume, profileId }: { onPlay: () => vo
         initial="hidden"
         animate="show"
       >
-        <motion.div variants={item} className="mb-3 text-lg">
+        <motion.div variants={item} className="mb-3 flex flex-wrap items-center gap-3 text-lg">
           <SeriesMark />
+          <span className="flex items-center gap-1.5 rounded-full border border-crimson-2/30 bg-crimson-2/10 px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-crimson-2">
+            <Equalizer />
+            STREAMING NOW
+          </span>
         </motion.div>
         <motion.h1 variants={item} className="font-display leading-[0.82] tracking-[0.02em] text-bone" style={{ fontSize: 'clamp(4rem, 12vw, 11rem)' }}>
-          <span className="shimmer-text">{profile.firstName}</span>
+          <LetterReveal text={profile.firstName} className="shimmer-text" delay={0.35} stagger={0.045} />
         </motion.h1>
         <motion.p variants={item} className="mt-1 font-sans text-sm font-bold tracking-[0.62em] text-crimson-2 sm:text-base">
           {profile.seriesTag}
@@ -193,13 +197,13 @@ function FloatChip({ text, sub, pos, depth, index, mx, my }: { text: string; sub
   const y = useTransform(my, (n: number) => n * depth);
   return (
     <motion.div
-      className={`glass absolute hidden rounded-xl px-4 py-2.5 md:block ${pos}`}
+      className={`glass sheen-card absolute hidden rounded-xl px-4 py-2.5 md:block ${pos} transition-all duration-300 hover:shadow-[0_12px_35px_rgba(229,19,43,0.3)] hover:border-white/30`}
       style={{ x, y }}
-      initial={{ opacity: 0, filter: 'blur(6px)' }}
-      animate={{ opacity: 1, filter: 'blur(0px)' }}
-      transition={{ duration: 0.9, delay: 1.2 + index * 0.18, ease: EASE }}
+      initial={{ opacity: 0, filter: 'blur(8px)', y: 24 }}
+      animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
+      transition={{ duration: 1.0, delay: 1.1 + index * 0.16, ease: EASE }}
     >
-      <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 5 + index, repeat: Infinity, ease: 'easeInOut' }}>
+      <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 4.2 + index * 1.4, repeat: Infinity, ease: 'easeInOut' }}>
         <p className="text-sm font-semibold text-bone">{text}</p>
         <p className="text-[10px] uppercase tracking-[0.2em] text-mist">{sub}</p>
       </motion.div>

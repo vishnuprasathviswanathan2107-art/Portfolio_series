@@ -17,6 +17,8 @@ export default function CustomCursor() {
   const y = useMotionValue(-100);
   const sx = useSpring(x, { stiffness: 600, damping: 40, mass: 0.4 });
   const sy = useSpring(y, { stiffness: 600, damping: 40, mass: 0.4 });
+  const ambX = useSpring(x, { stiffness: 90, damping: 25, mass: 0.8 });
+  const ambY = useSpring(y, { stiffness: 90, damping: 25, mass: 0.8 });
   const [mode, setMode] = useState<string | null>(null);
   const [hoverLink, setHoverLink] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -55,34 +57,51 @@ export default function CustomCursor() {
   const size = label ? (mode === 'view' ? 72 : 52) : hoverLink ? 34 : 10;
 
   return (
-    <motion.div
-      aria-hidden
-      className="pointer-events-none fixed left-0 top-0 z-[200] flex items-center justify-center rounded-full"
-      style={{ x: sx, y: sy, translateX: '-50%', translateY: '-50%' }}
-      animate={{
-        width: size,
-        height: size,
-        opacity: visible ? 1 : 0,
-        scale: down ? 0.85 : 1,
-        backgroundColor: label ? 'rgba(229,19,43,0.92)' : hoverLink ? 'rgba(244,241,236,0.08)' : 'rgba(244,241,236,1)',
-        borderColor: hoverLink && !label ? 'rgba(244,241,236,0.7)' : 'rgba(244,241,236,0)',
-      }}
-      transition={{ type: 'spring', stiffness: 420, damping: 30 }}
-    >
-      <span className="absolute inset-0 rounded-full border" style={{ borderColor: 'inherit' }} />
-      <AnimatePresence>
-        {label && (
-          <motion.span
-            key={label}
-            initial={{ opacity: 0, scale: 0.6 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.6 }}
-            className="font-sans text-[11px] font-bold tracking-[0.18em] text-white"
-          >
-            {label}
-          </motion.span>
-        )}
-      </AnimatePresence>
-    </motion.div>
+    <>
+      {/* Ambient cursor spotlight follower */}
+      <motion.div
+        aria-hidden
+        className="pointer-events-none fixed left-0 top-0 z-[1] h-[520px] w-[520px] rounded-full blur-3xl"
+        style={{
+          x: ambX,
+          y: ambY,
+          translateX: '-50%',
+          translateY: '-50%',
+          background: 'radial-gradient(circle, rgba(229,19,43,0.075) 0%, rgba(130,20,160,0.035) 45%, transparent 70%)',
+          opacity: visible ? 1 : 0,
+        }}
+        transition={{ duration: 0.3 }}
+      />
+
+      <motion.div
+        aria-hidden
+        className="pointer-events-none fixed left-0 top-0 z-[200] flex items-center justify-center rounded-full"
+        style={{ x: sx, y: sy, translateX: '-50%', translateY: '-50%' }}
+        animate={{
+          width: size,
+          height: size,
+          opacity: visible ? 1 : 0,
+          scale: down ? 0.85 : 1,
+          backgroundColor: label ? 'rgba(229,19,43,0.92)' : hoverLink ? 'rgba(244,241,236,0.08)' : 'rgba(244,241,236,1)',
+          borderColor: hoverLink && !label ? 'rgba(244,241,236,0.7)' : 'rgba(244,241,236,0)',
+        }}
+        transition={{ type: 'spring', stiffness: 420, damping: 30 }}
+      >
+        <span className="absolute inset-0 rounded-full border" style={{ borderColor: 'inherit' }} />
+        <AnimatePresence>
+          {label && (
+            <motion.span
+              key={label}
+              initial={{ opacity: 0, scale: 0.6 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.6 }}
+              className="font-sans text-[11px] font-bold tracking-[0.18em] text-white"
+            >
+              {label}
+            </motion.span>
+          )}
+        </AnimatePresence>
+      </motion.div>
+    </>
   );
 }

@@ -67,8 +67,8 @@ export default function FinalCTA({ onReplay }: { onReplay: () => void }) {
                 target={c.href.startsWith('http') ? '_blank' : undefined}
                 rel={c.href.startsWith('http') ? 'noreferrer' : undefined}
                 data-cursor={c.cursor}
-                className={`flex min-h-12 items-center gap-2 rounded-full px-7 text-sm font-bold tracking-[0.12em] transition ${
-                  c.primary ? 'bg-crimson text-white shadow-[0_0_50px_rgba(229,19,43,0.5)] hover:bg-crimson-2' : 'border border-white/25 text-bone hover:border-bone hover:bg-white/10'
+                className={`flex min-h-12 items-center gap-2 rounded-full px-7 text-sm font-bold tracking-[0.12em] transition-all duration-300 ${
+                  c.primary ? 'sheen-card bg-crimson text-white shadow-[0_0_50px_rgba(229,19,43,0.5)] hover:bg-crimson-2 hover:scale-105' : 'border border-white/25 text-bone hover:border-bone hover:bg-white/10 hover:scale-105'
                 }`}
               >
                 {c.primary && <span>▶</span>}

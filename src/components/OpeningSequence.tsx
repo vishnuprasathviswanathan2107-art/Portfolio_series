@@ -9,12 +9,12 @@ import { EASE, Magnetic } from './fx';
  * black → studio card → SUSHMITA → THE SERIES → portrait reveal → role → ▶ PLAY
  */
 const TIMELINE = [
-  { at: 300, beat: 1 }, // studio card
-  { at: 1900, beat: 2 }, // name
-  { at: 2700, beat: 3 }, // THE SERIES
-  { at: 3400, beat: 4 }, // portrait
-  { at: 4300, beat: 5 }, // role
-  { at: 5000, beat: 6 }, // play button
+  { at: 250, beat: 1 }, // studio card
+  { at: 1550, beat: 2 }, // name
+  { at: 2350, beat: 3 }, // THE SERIES
+  { at: 3000, beat: 4 }, // portrait
+  { at: 3700, beat: 5 }, // role
+  { at: 4350, beat: 6 }, // play button
 ];
 
 export default function OpeningSequence({ onDone }: { onDone: () => void }) {
@@ -92,7 +92,7 @@ export default function OpeningSequence({ onDone }: { onDone: () => void }) {
           srcSet={profile.portrait.srcSet}
           sizes="(max-width: 768px) 100vw, 900px"
           alt={profile.portrait.alt}
-          className="h-full w-auto max-w-none object-contain object-bottom [mask-image:linear-gradient(to_bottom,black_55%,transparent_98%)]"
+          className="h-full w-auto max-w-none object-contain object-bottom [mask-image:linear-gradient(to_bottom,black_82%,transparent_98%)]"
 
         />
       </motion.div>

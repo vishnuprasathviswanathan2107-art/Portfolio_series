@@ -1,8 +1,94 @@
 import { useEffect, useRef, type ReactNode, type PointerEvent as RPointerEvent } from 'react';
-import { motion, useMotionValue, useSpring, useTransform, type HTMLMotionProps } from 'framer-motion';
+import { motion, useInView, useMotionValue, useSpring, useTransform, type HTMLMotionProps } from 'framer-motion';
 import { useFinePointer, useReducedMotionPref } from '../hooks/useMedia';
 
-export const EASE = [0.22, 1, 0.36, 1] as const;
+/** Ultra-smooth Apple/Awwwards cinematic expo-out curve */
+export const EASE = [0.16, 1, 0.3, 1] as const;
+/** Subtle spring snap for micro-interactions */
+export const EASE_SNAP = [0.34, 1.4, 0.64, 1] as const;
+/** Classic cinematic deceleration curve */
+export const EASE_CINEMA = [0.22, 1, 0.36, 1] as const;
+
+/** Animated number counter that counts up smoothly when in view. */
+export function Counter({
+  value,
+  prefix = '',
+  suffix = '',
+  decimals = 0,
+  className = '',
+}: {
+  value: number;
+  prefix?: string;
+  suffix?: string;
+  decimals?: number;
+  className?: string;
+}) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-8% 0px' });
+  const spring = useSpring(0, { stiffness: 55, damping: 18, mass: 0.9 });
+  const display = useTransform(spring, (current) => {
+    const fixed = current.toFixed(decimals);
+    return `${prefix}${decimals > 0 ? fixed : Math.round(current).toLocaleString()}${suffix}`;
+  });
+
+  useEffect(() => {
+    if (inView) {
+      spring.set(value);
+    }
+  }, [inView, spring, value]);
+
+  return (
+    <span ref={ref} className={className}>
+      <motion.span>{display}</motion.span>
+    </span>
+  );
+}
+
+/** Streaming audio equalizer bars showing live series playback */
+export function Equalizer({ className = '' }: { className?: string }) {
+  return (
+    <span className={`inline-flex items-end gap-[2px] h-3.5 px-1 ${className}`} aria-hidden>
+      <span className="w-[2.5px] rounded-full bg-crimson-2 eq-1" />
+      <span className="w-[2.5px] rounded-full bg-crimson-2 eq-2" />
+      <span className="w-[2.5px] rounded-full bg-crimson-2 eq-3" />
+      <span className="w-[2.5px] rounded-full bg-crimson-2 eq-4" />
+    </span>
+  );
+}
+
+/** Staggered blockbuster letter-by-letter reveal with 3D perspective and blur */
+export function LetterReveal({
+  text,
+  className = '',
+  delay = 0,
+  stagger = 0.04,
+}: {
+  text: string;
+  className?: string;
+  delay?: number;
+  stagger?: number;
+}) {
+  const letters = Array.from(text);
+  return (
+    <span className={`inline-flex overflow-hidden [perspective:800px] ${className}`} aria-label={text}>
+      {letters.map((char, i) => (
+        <motion.span
+          key={i}
+          className="inline-block [transform-origin:50%_100%]"
+          initial={{ y: '115%', opacity: 0, rotateX: 60, filter: 'blur(10px)' }}
+          animate={{ y: '0%', opacity: 1, rotateX: 0, filter: 'blur(0px)' }}
+          transition={{
+            duration: 1.1,
+            delay: delay + i * stagger,
+            ease: EASE,
+          }}
+        >
+          {char === ' ' ? '\u00A0' : char}
+        </motion.span>
+      ))}
+    </span>
+  );
+}
 
 /** Wraps a control so it drifts toward the pointer — desktop only. */
 export function Magnetic({ children, strength = 0.35, className = '' }: { children: ReactNode; strength?: number; className?: string }) {

@@ -28,7 +28,7 @@ export default function TopPicks() {
               >
                 {i + 1}
               </span>
-              <div className="relative z-10 h-[85%] w-[150px] overflow-hidden rounded-lg shadow-[-12px_0_30px_rgba(0,0,0,0.7)] ring-1 ring-white/10 transition duration-500 group-hover:-translate-y-2 group-hover:ring-white/30 sm:w-[180px]">
+              <div className="sheen-card relative z-10 h-[85%] w-[150px] overflow-hidden rounded-lg shadow-[-12px_0_30px_rgba(0,0,0,0.7)] ring-1 ring-white/10 transition-all duration-500 group-hover:-translate-y-2 group-hover:ring-crimson-2/40 group-hover:shadow-[0_20px_40px_rgba(229,19,43,0.3)] sm:w-[180px]">
                 <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
                   <PosterBackdrop palette={pick.palette} />
                 </div>

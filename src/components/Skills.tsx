@@ -75,8 +75,8 @@ function SkillCard({ skill, hue }: { skill: Skill; hue: string }) {
         show: { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', transition: { duration: 0.55, ease: EASE } },
         exit: { opacity: 0, y: -12, transition: { duration: 0.2 } },
       }}
-      whileHover={{ y: -6 }}
-      className="group relative flex min-h-[148px] flex-col overflow-hidden rounded-xl bg-ink-2 p-4 text-left ring-1 ring-white/10 transition-shadow duration-500 hover:ring-white/20"
+      whileHover={{ y: -6, scale: 1.02 }}
+      className="group sheen-card relative flex min-h-[148px] flex-col overflow-hidden rounded-xl bg-ink-2 p-4 text-left ring-1 ring-white/10 transition-all duration-300 hover:ring-white/30"
       style={{ boxShadow: open ? `0 18px 50px -12px ${hue}55, 0 0 0 1px ${hue}66` : undefined }}
     >
       <div aria-hidden className="absolute -right-10 -top-10 h-32 w-32 rounded-full opacity-0 blur-2xl transition duration-500 group-hover:opacity-60" style={{ background: hue }} />
