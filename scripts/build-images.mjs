@@ -18,14 +18,31 @@ function isBgPixel(idx) {
 
 const isBg = new Uint8Array(width * height);
 const queue = [];
-if (isBgPixel(0)) {
-  isBg[0] = 1;
-  queue.push(0);
+
+// Seed queue with all perimeter pixels matching the background checkerboard
+for (let x = 0; x < width; x++) {
+  const topIdx = x;
+  if (!isBg[topIdx] && isBgPixel(topIdx * 3)) {
+    isBg[topIdx] = 1;
+    queue.push(topIdx);
+  }
+  const botIdx = (height - 1) * width + x;
+  if (!isBg[botIdx] && isBgPixel(botIdx * 3)) {
+    isBg[botIdx] = 1;
+    queue.push(botIdx);
+  }
 }
-const topR = width - 1;
-if (isBgPixel(topR * 3)) {
-  isBg[topR] = 1;
-  queue.push(topR);
+for (let y = 0; y < height; y++) {
+  const leftIdx = y * width;
+  if (!isBg[leftIdx] && isBgPixel(leftIdx * 3)) {
+    isBg[leftIdx] = 1;
+    queue.push(leftIdx);
+  }
+  const rightIdx = y * width + (width - 1);
+  if (!isBg[rightIdx] && isBgPixel(rightIdx * 3)) {
+    isBg[rightIdx] = 1;
+    queue.push(rightIdx);
+  }
 }
 
 let head = 0;
@@ -50,13 +67,22 @@ while (head < queue.length) {
   }
 }
 
-// Build 4-channel RGBA buffer
+// Build 4-channel RGBA buffer with smooth bottom fade to eliminate flat chair cut-off
 const rgba = Buffer.alloc(width * height * 4);
-for (let i = 0; i < width * height; i++) {
-  rgba[i * 4] = d1[i * 3];
-  rgba[i * 4 + 1] = d1[i * 3 + 1];
-  rgba[i * 4 + 2] = d1[i * 3 + 2];
-  rgba[i * 4 + 3] = isBg[i] ? 0 : 255;
+for (let y = 0; y < height; y++) {
+  let yAlpha = 1.0;
+  if (y > height * 0.82) {
+    const t = Math.max(0, 1 - (y - height * 0.82) / (height * 0.17));
+    // smoothstep curve: 3t^2 - 2t^3
+    yAlpha = t * t * (3 - 2 * t);
+  }
+  for (let x = 0; x < width; x++) {
+    const i = y * width + x;
+    rgba[i * 4] = d1[i * 3];
+    rgba[i * 4 + 1] = d1[i * 3 + 1];
+    rgba[i * 4 + 2] = d1[i * 3 + 2];
+    rgba[i * 4 + 3] = isBg[i] ? 0 : Math.round(255 * yAlpha);
+  }
 }
 
 const cutout = await sharp(rgba, { raw: { width, height, channels: 4 } }).png().toBuffer();

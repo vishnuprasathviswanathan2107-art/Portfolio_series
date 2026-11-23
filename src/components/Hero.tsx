@@ -44,9 +44,9 @@ export default function Hero({ onPlay, onResume, profileId }: { onPlay: () => vo
   ];
 
   const floating = [
-    { text: education[0].score, sub: 'B.Tech IT · Karpagam', pos: 'left-[2%] top-[30%]', depth: 1 },
-    { text: '444k+ Global Rank', sub: 'LeetCode · 1400+ CodeChef', pos: 'right-[0%] top-[18%]', depth: -1 },
-    { text: 'PostgreSQL · SQL · Java', sub: 'Core Data Stack', pos: 'right-[4%] bottom-[24%]', depth: 0.6 },
+    { text: education[0].score, sub: 'B.Tech IT · Karpagam', pos: 'left-[-2%] top-[46%]', depth: 1 },
+    { text: '444k+ Global Rank', sub: 'LeetCode · 1400+ CodeChef', pos: 'right-[2%] top-[14%]', depth: -1 },
+    { text: 'PostgreSQL · SQL · Java', sub: 'Core Data Stack', pos: 'right-[2%] bottom-[16%]', depth: 0.6 },
   ];
 
   return (
@@ -197,15 +197,15 @@ function FloatChip({ text, sub, pos, depth, index, mx, my }: { text: string; sub
   const y = useTransform(my, (n: number) => n * depth);
   return (
     <motion.div
-      className={`glass sheen-card absolute hidden rounded-xl px-4 py-2.5 md:block ${pos} transition-all duration-300 hover:shadow-[0_12px_35px_rgba(229,19,43,0.3)] hover:border-white/30`}
+      className={`glass sheen-card pointer-events-auto absolute hidden w-max max-w-[280px] whitespace-nowrap rounded-xl px-4 py-2.5 shadow-xl shadow-black/50 ring-1 ring-white/10 lg:block ${pos} transition-all duration-300 hover:border-crimson-2/40 hover:shadow-[0_12px_35px_rgba(229,19,43,0.3)]`}
       style={{ x, y }}
       initial={{ opacity: 0, filter: 'blur(8px)', y: 24 }}
       animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
       transition={{ duration: 1.0, delay: 1.1 + index * 0.16, ease: EASE }}
     >
       <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 4.2 + index * 1.4, repeat: Infinity, ease: 'easeInOut' }}>
-        <p className="text-sm font-semibold text-bone">{text}</p>
-        <p className="text-[10px] uppercase tracking-[0.2em] text-mist">{sub}</p>
+        <p className="text-sm font-semibold tracking-wide text-bone">{text}</p>
+        <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-mist">{sub}</p>
       </motion.div>
     </motion.div>
   );
